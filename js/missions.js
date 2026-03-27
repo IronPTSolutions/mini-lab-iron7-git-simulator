@@ -100,21 +100,32 @@ var missions = [
   {
     id: 6,
     title: 'Deshacer Cambios con Restore',
-    briefing: 'debug.log se ha anadido al staging por error — es un archivo temporal que no debe estar en el repositorio. Primero sacalo del staging con "git restore --staged", y luego descarta el archivo con "git restore". Despues haz commit solo con navigation.js.',
-    hint: 'git restore --staged debug.log → git restore debug.log → git commit -m "..."',
+    briefing: 'debug.log se ha anadido al staging por error — es un archivo temporal que no debe estar en el repositorio. Sacalo del staging con "git restore --staged debug.log" y luego descarta el archivo con "git restore debug.log".',
+    hint: 'git restore --staged debug.log → git restore debug.log',
     validate: function () {
       return (
         !gitRepo.stagingArea['debug.log'] &&
-        !gitRepo.workingDir['debug.log'] &&
-        gitRepo.commits.length >= 3
+        !gitRepo.workingDir['debug.log']
       );
+    },
+    onComplete: function () {
+      return '[ORDENADOR DE LA ESTACION] debug.log eliminado. navigation.js sigue en staging listo para commit.';
+    }
+  },
+  {
+    id: 7,
+    title: 'Commit de Navegacion',
+    briefing: 'navigation.js sigue en el staging area con los cambios del sistema de navegacion. Haz commit para registrar la actualizacion.',
+    hint: 'git commit -m "..."',
+    validate: function () {
+      return gitRepo.commits.length >= 3;
     },
     onComplete: function () {
       return null;
     }
   },
   {
-    id: 7,
+    id: 8,
     title: 'Ver el Historial (git log)',
     briefing: 'Comprueba el historial de commits para ver el registro de cambios del repositorio.',
     hint: 'git log',
@@ -132,7 +143,7 @@ var missions = [
     }
   },
   {
-    id: 8,
+    id: 9,
     title: 'Eliminar Archivo y Commit',
     briefing: 'El archivo shields.config esta obsoleto — el sistema de escudos se ha migrado a shields.js. Elimina el archivo viejo, anade el nuevo, y haz commit.',
     hint: 'git rm shields.config → git add shields.js → git commit -m "..."',
@@ -144,7 +155,7 @@ var missions = [
     }
   },
   {
-    id: 9,
+    id: 10,
     title: 'Push al Remoto',
     briefing: 'Todas las reparaciones estan completas. Sube los cambios al servidor central para que el resto de la tripulacion pueda acceder a ellos.',
     hint: 'git push origin main',

@@ -119,7 +119,7 @@ git commit -m "Fix shield configuration and add comms module"
 
 ### Mision 6 — Deshacer Cambios con Restore
 
-El ordenador ha anadido `debug.log` al staging por error (un archivo temporal que no debe estar en el repo). Necesitas sacarlo del staging, descartarlo, y luego hacer commit solo con los cambios buenos.
+El ordenador ha anadido `debug.log` al staging por error (un archivo temporal que no debe estar en el repo). Sacalo del staging y descartalo.
 
 <details>
 <summary>Solucion</summary>
@@ -127,6 +127,20 @@ El ordenador ha anadido `debug.log` al staging por error (un archivo temporal qu
 ```
 git restore --staged debug.log
 git restore debug.log
+```
+
+</details>
+
+---
+
+### Mision 7 — Commit de Navegacion
+
+navigation.js sigue en staging con los cambios de navegacion. Haz commit.
+
+<details>
+<summary>Solucion</summary>
+
+```
 git commit -m "Update navigation system"
 ```
 
@@ -134,7 +148,7 @@ git commit -m "Update navigation system"
 
 ---
 
-### Mision 7 — Ver el Historial
+### Mision 8 — Ver el Historial
 
 Revisa el log de commits del repositorio.
 
@@ -149,7 +163,7 @@ git log
 
 ---
 
-### Mision 8 — Eliminar Archivo y Commit
+### Mision 9 — Eliminar Archivo y Commit
 
 El archivo `shields.config` esta obsoleto. Eliminalo, anade el nuevo `shields.js`, y haz commit.
 
@@ -166,7 +180,7 @@ git commit -m "Migrate shields to JS module"
 
 ---
 
-### Mision 9 — Push al Remoto
+### Mision 10 — Push al Remoto
 
 Sube todos los cambios al servidor central.
 
