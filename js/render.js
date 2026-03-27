@@ -14,19 +14,16 @@ function renderAll() {
 function renderMissionBriefing() {
   var titleEl = document.getElementById('mission-title');
   var briefEl = document.getElementById('mission-briefing');
-  var hintEl = document.getElementById('mission-hint');
 
   var mission = getCurrentMission();
   if (!mission) {
     titleEl.textContent = 'Todas las misiones completadas';
     briefEl.textContent = 'La estacion IRON-7 esta completamente operativa.';
-    hintEl.textContent = '';
     return;
   }
 
   titleEl.textContent = 'Mision ' + mission.id + ': ' + mission.title;
   briefEl.textContent = mission.briefing;
-  hintEl.textContent = mission.hint;
 }
 
 // ---- Working Directory ----
