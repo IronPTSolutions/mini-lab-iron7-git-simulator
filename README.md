@@ -39,9 +39,14 @@ Escribe `help` en el terminal para ver todos los comandos disponibles.
 
 El repositorio de la estacion esta en un servidor remoto. Clonalo para empezar a trabajar.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git clone https://github.com/iron-7/station-systems.git
 ```
+
+</details>
 
 ---
 
@@ -49,15 +54,23 @@ git clone https://github.com/iron-7/station-systems.git
 
 Comprueba que archivos hay en el repositorio y si alguno ha cambiado.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git status
 ```
+
+</details>
 
 ---
 
 ### Mision 3 — Anadir Cambios al Staging
 
 El sistema de auto-reparacion ha modificado archivos. Anadilos al staging area.
+
+<details>
+<summary>Solucion</summary>
 
 ```
 git add shields.config
@@ -70,15 +83,22 @@ O anade todos a la vez:
 git add .
 ```
 
+</details>
+
 ---
 
 ### Mision 4 — Ver las Diferencias
 
 Revisa que ha cambiado exactamente en los archivos antes de hacer commit.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git diff
 ```
+
+</details>
 
 ---
 
@@ -86,9 +106,14 @@ git diff
 
 Confirma los cambios con un mensaje descriptivo.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git commit -m "Fix shield configuration and add comms module"
 ```
+
+</details>
 
 ---
 
@@ -96,9 +121,14 @@ git commit -m "Fix shield configuration and add comms module"
 
 Revisa el log de commits del repositorio.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git log
 ```
+
+</details>
 
 ---
 
@@ -106,11 +136,16 @@ git log
 
 El archivo `shields.config` esta obsoleto. Eliminalo, anade el nuevo `shields.js`, y haz commit.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git rm shields.config
 git add shields.js
 git commit -m "Migrate shields to JS module"
 ```
+
+</details>
 
 ---
 
@@ -118,9 +153,14 @@ git commit -m "Migrate shields to JS module"
 
 Sube todos los cambios al servidor central.
 
+<details>
+<summary>Solucion</summary>
+
 ```
 git push
 ```
+
+</details>
 
 ---
 
