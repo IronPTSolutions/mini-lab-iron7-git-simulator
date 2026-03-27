@@ -194,6 +194,61 @@ function gitRm(filename) {
   return 'rm \'' + filename + '\'';
 }
 
+// ---- Restore ----
+function gitRestore(filename, isStaged) {
+  if (!gitRepo.cloned) return notARepo();
+
+  // git restore --staged <file> — unstage
+  if (isStaged) {
+    if (!gitRepo.stagingArea[filename]) {
+      return 'error: pathspec \'' + filename + '\' did not match any file(s) known to git';
+    }
+    var staged = gitRepo.stagingArea[filename];
+    // Move back to working dir with appropriate status
+    if (staged.action === 'add') {
+      // Was a new file — back to "new" in workingDir
+      if (gitRepo.workingDir[filename]) {
+        gitRepo.workingDir[filename].status = 'new';
+      }
+    } else if (staged.action === 'modify') {
+      if (gitRepo.workingDir[filename]) {
+        gitRepo.workingDir[filename].status = 'modified';
+      }
+    } else if (staged.action === 'delete') {
+      // Restore the file to working dir
+      var lastContent = getLastCommittedContent(filename);
+      gitRepo.workingDir[filename] = { content: lastContent, status: 'unmodified' };
+    }
+    delete gitRepo.stagingArea[filename];
+    return 'Unstaged: ' + filename;
+  }
+
+  // git restore <file> — discard working dir changes
+  if (!gitRepo.workingDir[filename]) {
+    return 'error: pathspec \'' + filename + '\' did not match any file(s) known to git';
+  }
+
+  var st = gitRepo.workingDir[filename].status;
+  if (st === 'unmodified' || st === 'staged') {
+    return 'Already up to date.';
+  }
+
+  if (st === 'new') {
+    // New file — restore means delete it (it didn't exist before)
+    delete gitRepo.workingDir[filename];
+    return 'Deleted untracked file: ' + filename;
+  }
+
+  // Modified — restore to last committed content
+  var committed = getLastCommittedContent(filename);
+  if (!committed && committed !== '') {
+    return 'error: could not restore \'' + filename + '\'';
+  }
+  gitRepo.workingDir[filename].content = committed;
+  gitRepo.workingDir[filename].status = 'unmodified';
+  return 'Restored: ' + filename + ' (changes discarded)';
+}
+
 // ---- Diff ----
 function gitDiff() {
   if (!gitRepo.cloned) return notARepo();
@@ -331,8 +386,12 @@ function gitLog() {
 }
 
 // ---- Push ----
-function gitPush() {
+function gitPush(args) {
   if (!gitRepo.cloned) return notARepo();
+
+  if (args !== 'origin main') {
+    return 'error: you must specify the remote and branch.\nUsage: git push origin main';
+  }
 
   var unpushed = [];
   for (var i = 0; i < gitRepo.commits.length; i++) {

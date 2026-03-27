@@ -15,10 +15,12 @@ function parseCommand(input) {
         '  git status             Show working tree status\n' +
         '  git add <file>         Stage a file (use "." for all)\n' +
         '  git rm <file>          Remove a file\n' +
+        '  git restore <file>     Discard changes in working directory\n' +
+        '  git restore --staged <file>  Unstage a file\n' +
         '  git diff               Show changes\n' +
         '  git commit -m "msg"    Record changes\n' +
         '  git log                Show commit history\n' +
-        '  git push               Push commits to remote\n' +
+        '  git push origin main   Push commits to remote\n' +
         '  clear                  Clear terminal\n' +
         '  help                   Show this help',
       success: true,
@@ -54,6 +56,18 @@ function parseCommand(input) {
     return { output: gitRm(rmMatch[1].trim()), success: true, isHtml: false };
   }
 
+  // git restore --staged <file>
+  var restoreStagedMatch = cmd.match(/^git restore --staged (.+)$/);
+  if (restoreStagedMatch) {
+    return { output: gitRestore(restoreStagedMatch[1].trim(), true), success: true, isHtml: false };
+  }
+
+  // git restore <file>
+  var restoreMatch = cmd.match(/^git restore (.+)$/);
+  if (restoreMatch) {
+    return { output: gitRestore(restoreMatch[1].trim(), false), success: true, isHtml: false };
+  }
+
   // git diff
   if (cmd === 'git diff') {
     return { output: gitDiff(), success: true, isHtml: true };
@@ -87,9 +101,11 @@ function parseCommand(input) {
     return { output: gitLog(), success: true, isHtml: true };
   }
 
-  // git push
-  if (cmd === 'git push') {
-    return { output: gitPush(), success: true, isHtml: false };
+  // git push origin main
+  var pushMatch = cmd.match(/^git push(.*)$/);
+  if (pushMatch) {
+    var pushArgs = pushMatch[1].trim();
+    return { output: gitPush(pushArgs), success: true, isHtml: false };
   }
 
   // ls (easter egg)

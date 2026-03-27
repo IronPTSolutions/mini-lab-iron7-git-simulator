@@ -117,7 +117,24 @@ git commit -m "Fix shield configuration and add comms module"
 
 ---
 
-### Mision 6 — Ver el Historial
+### Mision 6 — Deshacer Cambios con Restore
+
+El ordenador ha anadido `debug.log` al staging por error (un archivo temporal que no debe estar en el repo). Necesitas sacarlo del staging, descartarlo, y luego hacer commit solo con los cambios buenos.
+
+<details>
+<summary>Solucion</summary>
+
+```
+git restore --staged debug.log
+git restore debug.log
+git commit -m "Update navigation system"
+```
+
+</details>
+
+---
+
+### Mision 7 — Ver el Historial
 
 Revisa el log de commits del repositorio.
 
@@ -132,7 +149,7 @@ git log
 
 ---
 
-### Mision 7 — Eliminar Archivo y Commit
+### Mision 8 — Eliminar Archivo y Commit
 
 El archivo `shields.config` esta obsoleto. Eliminalo, anade el nuevo `shields.js`, y haz commit.
 
@@ -149,7 +166,7 @@ git commit -m "Migrate shields to JS module"
 
 ---
 
-### Mision 8 — Push al Remoto
+### Mision 9 — Push al Remoto
 
 Sube todos los cambios al servidor central.
 
@@ -157,7 +174,7 @@ Sube todos los cambios al servidor central.
 <summary>Solucion</summary>
 
 ```
-git push
+git push origin main
 ```
 
 </details>
@@ -173,10 +190,12 @@ git push
 | `git add <file>` | Anadir un archivo al staging |
 | `git add .` | Anadir todos los archivos modificados |
 | `git rm <file>` | Eliminar un archivo |
+| `git restore <file>` | Descartar cambios en working directory |
+| `git restore --staged <file>` | Sacar un archivo del staging |
 | `git diff` | Ver las diferencias |
 | `git commit -m "msg"` | Hacer un commit |
 | `git log` | Ver el historial de commits |
-| `git push` | Subir los commits al remoto |
+| `git push origin main` | Subir los commits al remoto |
 | `help` | Ver la ayuda |
 | `clear` | Limpiar el terminal |
 

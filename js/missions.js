@@ -72,16 +72,50 @@ var missions = [
       return gitRepo.commits.length >= 2;
     },
     onComplete: function () {
-      // Auto-modify navigation.js
+      // Auto-modify navigation.js AND create a bad file
       gitRepo.workingDir['navigation.js'].content = '// IRON-7 Navigation System\nconst heading = 90;\nconst speed = 28000;\nconsole.log("Navigation online — course set");\n';
       gitRepo.workingDir['navigation.js'].status = 'modified';
 
-      return '[ORDENADOR DE LA ESTACION] El sistema de navegacion ha sido recalibrado. navigation.js actualizado.';
+      gitRepo.workingDir['debug.log'] = {
+        content: '[ERROR] Core dump detected\n[WARN] Memory leak in sector 7\n',
+        status: 'new'
+      };
+
+      // Auto-stage both (simulating a "git add ." accident)
+      gitRepo.stagingArea['navigation.js'] = {
+        content: gitRepo.workingDir['navigation.js'].content,
+        action: 'modify'
+      };
+      gitRepo.workingDir['navigation.js'].status = 'staged';
+
+      gitRepo.stagingArea['debug.log'] = {
+        content: gitRepo.workingDir['debug.log'].content,
+        action: 'add'
+      };
+      gitRepo.workingDir['debug.log'].status = 'staged';
+
+      return '[ORDENADOR DE LA ESTACION] navigation.js actualizado y debug.log generado. ALERTA: alguien ha ejecutado "git add ." por error y ambos archivos estan en staging. debug.log NO debe subirse al repositorio. Usa git restore para corregir esto.';
     }
   },
   {
     id: 6,
-    title: 'Ver el Historial',
+    title: 'Deshacer Cambios con Restore',
+    briefing: 'debug.log se ha anadido al staging por error — es un archivo temporal que no debe estar en el repositorio. Primero sacalo del staging con "git restore --staged", y luego descarta el archivo con "git restore". Despues haz commit solo con navigation.js.',
+    hint: 'git restore --staged debug.log → git restore debug.log → git commit -m "..."',
+    validate: function () {
+      return (
+        !gitRepo.stagingArea['debug.log'] &&
+        !gitRepo.workingDir['debug.log'] &&
+        gitRepo.commits.length >= 3
+      );
+    },
+    onComplete: function () {
+      return null;
+    }
+  },
+  {
+    id: 7,
+    title: 'Ver el Historial (git log)',
     briefing: 'Comprueba el historial de commits para ver el registro de cambios del repositorio.',
     hint: 'git log',
     validate: function () {
@@ -98,22 +132,22 @@ var missions = [
     }
   },
   {
-    id: 7,
+    id: 8,
     title: 'Eliminar Archivo y Commit',
     briefing: 'El archivo shields.config esta obsoleto — el sistema de escudos se ha migrado a shields.js. Elimina el archivo viejo, anade el nuevo, y haz commit.',
     hint: 'git rm shields.config → git add shields.js → git commit -m "..."',
     validate: function () {
-      return gitRepo.commits.length >= 3 && !gitRepo.workingDir['shields.config'] && gitRepo.workingDir['shields.js'];
+      return gitRepo.commits.length >= 4 && !gitRepo.workingDir['shields.config'] && gitRepo.workingDir['shields.js'];
     },
     onComplete: function () {
       return null;
     }
   },
   {
-    id: 8,
+    id: 9,
     title: 'Push al Remoto',
     briefing: 'Todas las reparaciones estan completas. Sube los cambios al servidor central para que el resto de la tripulacion pueda acceder a ellos.',
-    hint: 'git push',
+    hint: 'git push origin main',
     validate: function () {
       return gitRepo.remotePushed.length === gitRepo.commits.length;
     },
