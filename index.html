@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IRON-7 — Git Mission Control</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="git-dashboard">
+      <!-- ===== HEADER ===== -->
+      <header class="header">
+        <div class="header-left">
+          <span class="header-logo">IRON-7</span>
+          <span class="header-subtitle">Git Mission Control</span>
+        </div>
+        <div class="progress-tracker">
+          <div class="progress-dots">
+            <div class="progress-dot">1</div>
+            <div class="progress-dot">2</div>
+            <div class="progress-dot">3</div>
+            <div class="progress-dot">4</div>
+            <div class="progress-dot">5</div>
+            <div class="progress-dot">6</div>
+            <div class="progress-dot">7</div>
+            <div class="progress-dot">8</div>
+          </div>
+          <span class="progress-pct" id="progress-pct">0/8</span>
+        </div>
+      </header>
+
+      <!-- ===== MISSION BRIEFING ===== -->
+      <div class="briefing">
+        <div class="briefing-content">
+          <span class="briefing-label">MISION</span>
+          <strong id="mission-title"></strong>
+          <p id="mission-briefing"></p>
+        </div>
+        <div class="briefing-hint">
+          <span class="hint-label">COMANDO</span>
+          <code id="mission-hint"></code>
+        </div>
+      </div>
+
+      <!-- ===== VISUAL PANELS ===== -->
+      <div class="panels">
+        <!-- Working Directory -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-icon">&#128193;</span>
+            <span class="panel-title">Working Directory</span>
+          </div>
+          <div class="panel-body" id="workdir-files">
+            <p class="empty-msg">Repositorio no clonado</p>
+          </div>
+        </div>
+
+        <!-- Staging Area -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-icon">&#128230;</span>
+            <span class="panel-title">Staging Area</span>
+          </div>
+          <div class="panel-body" id="staging-files">
+            <p class="empty-msg">Staging area vacio</p>
+          </div>
+        </div>
+
+        <!-- Commit History -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-icon">&#128200;</span>
+            <span class="panel-title">Commit History</span>
+          </div>
+          <div class="panel-body" id="history-commits">
+            <p class="empty-msg">Sin historial de commits</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TERMINAL ===== -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-bar-title">IRON-7 Terminal</span>
+        </div>
+        <div id="terminal-output" class="terminal-output"></div>
+        <div class="terminal-input-line">
+          <span id="terminal-prompt" class="terminal-prompt">iron-7:~ $</span>
+          <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus />
+        </div>
+      </div>
+    </div>
+
+    <script src="js/git-state.js"></script>
+    <script src="js/command-parser.js"></script>
+    <script src="js/missions.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/render.js"></script>
+  </body>
+</html>
