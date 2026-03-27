@@ -24,7 +24,7 @@ El dashboard te muestra en tiempo real como los archivos se mueven entre el **Wo
 
 ## Setup
 
-1. Abre el dashboard: **[enlace de GitHub Pages]**
+1. Abre el dashboard: **[https://ironptsolutions.github.io/mini-lab-iron7-git-simulator/](https://ironptsolutions.github.io/mini-lab-iron7-git-simulator/)**
 2. Lee la mision activa en la barra superior
 3. Escribe los comandos en el terminal de la parte inferior
 4. Observa como los paneles visuales se actualizan con cada comando
