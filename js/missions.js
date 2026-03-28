@@ -148,7 +148,13 @@ var missions = [
     briefing: 'El archivo shields.config esta obsoleto — el sistema de escudos se ha migrado a shields.js. Elimina el archivo viejo, anade el nuevo, y haz commit.',
     hint: 'git rm shields.config → git add shields.js → git commit -m "..."',
     validate: function () {
-      return gitRepo.commits.length >= 4 && !gitRepo.workingDir['shields.config'] && gitRepo.workingDir['shields.js'];
+      // Check shields.config is gone, shields.js exists, and the rm+add were committed (not still in staging)
+      return (
+        !gitRepo.workingDir['shields.config'] &&
+        gitRepo.workingDir['shields.js'] &&
+        !gitRepo.stagingArea['shields.config'] &&
+        !gitRepo.stagingArea['shields.js']
+      );
     },
     onComplete: function () {
       return null;
