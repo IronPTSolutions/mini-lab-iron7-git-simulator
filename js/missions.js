@@ -9,7 +9,7 @@ var missions = [
   {
     id: 1,
     title: 'Clonar el Repositorio',
-    briefing: 'Los sistemas de la estacion IRON-7 estan almacenados en un repositorio remoto. Clona el repositorio para empezar las reparaciones.',
+    briefing: 'Los sistemas de la estacion IRON-7 estan almacenados en un repositorio remoto. Clona el repositorio para empezar las reparaciones. URL: https://github.com/iron-7/station-systems.git',
     hint: 'git clone https://github.com/iron-7/station-systems.git',
     validate: function () {
       return gitRepo.cloned === true;

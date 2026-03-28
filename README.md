@@ -39,6 +39,8 @@ Escribe `help` en el terminal para ver todos los comandos disponibles.
 
 El repositorio de la estacion esta en un servidor remoto. Clonalo para empezar a trabajar.
 
+URL del repositorio: `https://github.com/iron-7/station-systems.git`
+
 <details>
 <summary>Solucion</summary>
 
